@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CKD Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('{{ url_for('static', filename='image1.jpg') }}') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 500px;
+            height: 90vh;
+            overflow-y: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        form input,
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn-row button {
+            flex: 1;
+            padding: 10px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            background: #28a745;
+        }
+
+        .btn-autofill {
+            background: #007BFF;
+        }
+
+        .btn-submit:hover {
+            background: #218838;
+        }
+
+        .btn-autofill:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Chronic Kidney Disease Prediction</h1>
+        <form id="ckd-form" action="{{ url_for('predict') }}" method="POST">
+            <label>Age (AGE):</label><input type="number" name="age" value="0">
+
+<label>Blood Pressure (BP):</label><input type="number" name="bp" value="0">
+
+<label>Specific Gravity (SG):</label><input type="number" step="any" name="sg" value="0">
+
+<label>Albumin (AL):</label><input type="number" name="al" value="0">
+
+<label>Sugar (SU):</label><input type="number" name="su" value="0">
+s
+            <label>Red Blood Cells (RBC):</label>
+            <select name="rbc">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label>Pus Cell (PC):</label>
+            <select name="pc">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label>Pus Cell Clumps (PCC):</label>
+            <select name="pcc">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label>Bacteria (BA):</label>
+            <select name="ba">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label>Blood Glucose Random (BGR):</label><input type="number" name="bgr" value="0">
+
+<label>Blood Urea (BU):</label><input type="number" name="bu" value="0">
+
+<label>Serum Creatinine (SC):</label><input type="number" step="any" name="sc" value="0">
+
+<label>Sodium (SOD):</label><input type="number" step="any" name="sod" value="0">
+
+<label>Potassium (POT):</label><input type="number" step="any" name="pot" value="0">
+
+<label>Hemoglobin (HEMO):</label><input type="number" step="any" name="hemo" value="0">
+
+<label>Packed Cell Volume (PCV):</label><input type="number" name="pcv" value="0">
+
+<label>White Blood Cell Count (WC):</label><input type="number" name="wc" value="0">
+
+<label>Red Blood Cell Count (RC):</label><input type="number" step="any" name="rc" value="0">
+
+            <label>Hypertension (HTN):</label>
+            <select name="htn">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label>Diabetes Mellitus (DM):</label>
+            <select name="dm">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label>Coronary Artery Disease (CAD):</label>
+            <select name="cad">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label>Appetite (APPET):</label>
+            <select name="appet">
+                <option value="0">Good</option>
+                <option value="1">Poor</option>
+            </select>
+            <label>Pedal Edema (PE):</label>
+            <select name="pe">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+            <label>Anemia (ANE):</label>
+            <select name="ane">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
+
+            <div class="btn-row">
+                <button type="submit" class="btn-submit">Predict</button>
+                <button type="button" class="btn-autofill" onclick="autofillCKD()">CKD +</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function autofillCKD() {
+            const values = {
+                age: 65, bp: 90, sg: 1.015, al: 3, su: 2, rbc: 1, pc: 1, pcc: 1,
+                ba: 1, bgr: 180, bu: 50, sc: 3.2, sod: 132, pot: 5.5, hemo: 9,
+                pcv: 30, wc: 12000, rc: 3.5, htn: 1, dm: 1, cad: 1, appet: 1,
+                pe: 1, ane: 1
+            };
+
+            for (let key in values) {
+                let input = document.querySelector(`[name="${key}"]`);
+                if (input) input.value = values[key];
+            }
+        }
+    </script>
+</body>
+</html>

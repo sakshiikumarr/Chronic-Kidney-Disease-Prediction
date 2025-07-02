@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CKD Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('{{ url_for('static', filename='background.jpg') }}') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .result-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .result-text {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .back-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .back-btn:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-box">
+        <div class="result-text">{{ result }}</div>
+        <a class="back-btn" href="{{ url_for('home') }}">Back to Home</a>
+    </div>
+</body>
+</html>
